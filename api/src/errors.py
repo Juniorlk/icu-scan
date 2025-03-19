@@ -4,73 +4,73 @@ from fastapi.responses import JSONResponse
 from fastapi import FastAPI, status
 from sqlalchemy.exc import SQLAlchemyError
 
-class BooklyException(Exception):
-    """This is the base class for all bookly errors"""
+class IcuScanException(Exception):
+    """This is the base class for all icu scan errors"""
 
     pass
 
 
-class InvalidToken(BooklyException):
+class InvalidToken(IcuScanException):
     """User has provided an invalid or expired token"""
 
     pass
 
 
-class RevokedToken(BooklyException):
+class RevokedToken(IcuScanException):
     """User has provided a token that has been revoked"""
 
     pass
 
 
-class AccessTokenRequired(BooklyException):
+class AccessTokenRequired(IcuScanException):
     """User has provided a refresh token when an access token is needed"""
 
     pass
 
 
-class RefreshTokenRequired(BooklyException):
+class RefreshTokenRequired(IcuScanException):
     """User has provided an access token when a refresh token is needed"""
 
     pass
 
 
-class UserAlreadyExists(BooklyException):
+class UserAlreadyExists(IcuScanException):
     """User has provided an email for a user who exists during sign up."""
 
     pass
 
 
-class InvalidCredentials(BooklyException):
+class InvalidCredentials(IcuScanException):
     """User has provided wrong email or password during log in."""
 
     pass
 
 
-class InsufficientPermission(BooklyException):
+class InsufficientPermission(IcuScanException):
     """User does not have the neccessary permissions to perform an action."""
 
     pass
 
 
-class BookNotFound(BooklyException):
-    """Book Not found"""
+class ProjectNotFound(IcuScanException):
+    """Project Not found"""
 
     pass
 
 
-class TagNotFound(BooklyException):
+class TagNotFound(IcuScanException):
     """Tag Not found"""
 
     pass
 
 
-class TagAlreadyExists(BooklyException):
+class TagAlreadyExists(IcuScanException):
     """Tag already exists"""
 
     pass
 
 
-class UserNotFound(BooklyException):
+class UserNotFound(IcuScanException):
     """User Not found"""
 
     pass
@@ -84,7 +84,7 @@ def create_exception_handler(
     status_code: int, initial_detail: Any
 ) -> Callable[[Request, Exception], JSONResponse]:
 
-    async def exception_handler(request: Request, exc: BooklyException):
+    async def exception_handler(request: Request, exc: IcuScanException):
 
         return JSONResponse(content=initial_detail, status_code=status_code)
 
@@ -114,12 +114,12 @@ def register_all_errors(app: FastAPI):
         ),
     )
     app.add_exception_handler(
-        BookNotFound,
+        ProjectNotFound,
         create_exception_handler(
             status_code=status.HTTP_404_NOT_FOUND,
             initial_detail={
-                "message": "Book not found",
-                "error_code": "book_not_found",
+                "message": "Project not found",
+                "error_code": "project_not_found",
             },
         ),
     )
@@ -207,12 +207,12 @@ def register_all_errors(app: FastAPI):
     )
 
     app.add_exception_handler(
-        BookNotFound,
+        ProjectNotFound,
         create_exception_handler(
             status_code=status.HTTP_404_NOT_FOUND,
             initial_detail={
-                "message": "Book Not Found",
-                "error_code": "book_not_found",
+                "message": "Project Not Found",
+                "error_code": "project_not_found",
             },
         ),
     )

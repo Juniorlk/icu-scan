@@ -4,13 +4,12 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
-from src.books.schemas import Book
-from src.reviews.schemas import ReviewModel
+from src.projects.schemas import Project
 
 
 class UserCreateModel(BaseModel):
     name: str = Field(max_length=25)
-    username: str = Field(max_length=8)
+    username: str = Field(max_length=60)
     email: str = Field(max_length=40)
     password: str = Field(min_length=6)
 
@@ -46,9 +45,8 @@ class UserReadModel(BaseModel):
     created_at: datetime
     update_at: datetime
 
-class UserBooksModel(UserModel):
-    books: List[Book]
-    reviews: List[ReviewModel]
+class UserProjectsModel(UserModel):
+    projects : List[Project]
 
 
 class UserLoginModel(BaseModel):

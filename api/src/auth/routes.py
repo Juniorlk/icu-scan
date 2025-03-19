@@ -15,7 +15,7 @@ from .dependencies import (
     get_current_user,
 )
 from .schemas import (
-    UserBooksModel,
+    UserProjectsModel,
     UserCreateModel,
     UserLoginModel,
     UserReadModel,
@@ -183,7 +183,7 @@ async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer(
     raise InvalidToken
 
 
-@auth_router.get("/me", response_model=UserBooksModel)
+@auth_router.get("/me", response_model=UserProjectsModel)
 async def get_current_user(
     user=Depends(get_current_user), _: bool = Depends(role_checker)
 ):
